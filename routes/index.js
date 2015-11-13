@@ -14,6 +14,7 @@ router.route('/users')
 // requiring token validation for every route except login
 router.use(authController.validateUser);
 
+// Used for admins
 router.route('/users')
 	.get(userController.getAll)
 
