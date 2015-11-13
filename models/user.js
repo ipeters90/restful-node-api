@@ -20,7 +20,8 @@ var UserSchema = new mongoose.Schema({
   lastname: {
     type: String,
     required: true
-  }
+  },
+  admin: Boolean
 });
 
 // Execute before each user.save() call

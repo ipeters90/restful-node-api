@@ -2,17 +2,20 @@
 var router = require('express').Router();
 
 // User controller/business logic
-var userController = require('../controllers/user');
+var userController = require('./user');
 
 // Login authentication
 var authController = require('../controllers/authenticate');
 
+router.get('/', function(req,res) {
+	res.send("Hi")
+})
 
 router.route('/users')
 	.post(authController.login);
 
 // requiring token validation for every route except login
-router.use(authController.validateUser);
+//router.use(authController.validateUser);
 
 // Used for admins
 router.route('/users')
@@ -23,3 +26,5 @@ router.route('/users/:user_id')
 	.post(userController.create)
 	.put(userController.update)
 	.delete(userController.delete);
+
+module.exports = router;

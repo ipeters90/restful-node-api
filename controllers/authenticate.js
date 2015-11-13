@@ -1,5 +1,5 @@
 var User   = require('../models/user');
-var jwt    = require('jsonwebtokens');
+var jwt    = require('jsonwebtoken');
 var secret = require('../config').secret;
 
 // logging in to the application

@@ -1,9 +1,9 @@
 var app          = require('express')(),
 	bodyParser   = require('body-parser'),
 	cookieParser = require('cookie-parser'),
-	morgan       = require('morgan'),
+	logger       = require('morgan'),
 	mongoose     = require('mongoose'),
-	jwt        	 = require('jsonwebtokens'),
+	jwt        	 = require('jsonwebtoken'),
 	config       = require('./config'),
 	User         = require('./models/user'),
 	routes       = require('./routes/index'),
@@ -13,6 +13,9 @@ mongoose.connect(config.database_uri); // connecting to the database
 
 app.set('topSecret', config.secret); // secret variable
 
+// logging out requests to the console
+app.use(logger('dev'));
+
 // use body parser so we can get info from POST and/or URL parameters
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -20,11 +23,14 @@ app.use(bodyParser.json());
 //parsing cookies
 app.use(cookieParser());
 
-// Register all our routes with /api
-app.use('/api', routes);
+app.use('/', routes);
 
-// logging out requests to the console
-app.use(morgan('dev'));
+// If no route is matched by now, it must be a 404
+app.use(function(req, res, next) {
+  var err = new Error('Not Found');
+  err.status = 404;
+  next(err);
+});
 
 app.listen(port, function() {
 	console.log('Listening on http://localhost/%d', port);

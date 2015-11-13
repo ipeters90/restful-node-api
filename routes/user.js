@@ -9,7 +9,7 @@ var users = {
   },
  
   getOne: function(req, res) {
-    User.findById(req.params.user_id;, function(err, user) {
+    User.findById(req.params.id, function(err, user) {
       if (err) throw err;
       res.json(user);
     })
@@ -38,8 +38,8 @@ var users = {
         return res.send({ error: 'Not found' });
       }
       user.email = req.body.email;
-      firstname: req.body.firstname,
-      lastname: req.body.lastname,
+      firstname: req.body.firstname;
+      lastname: req.body.lastname;
 
       user.save(function(err) {
         if (err) res.send(err);
