@@ -4,8 +4,16 @@ var secret = require('../config').secret;
 
 // logging in to the application
 exports.login = function(req, res, next) {
+ 
+    var email = req.body.email || '';
+    var password = req.body.password || '';
+ 
+    if (email == '' || password == '') {
+        return res.send(401);
+    }
+
 	User.findOne({
-		email: req.body.email
+		email: email
 	}, function(err, user) {
 		if (err) return next(err);
 
@@ -13,7 +21,7 @@ exports.login = function(req, res, next) {
 			res.json({ success: false, message: 'Authentication failed. User not found.' });
 		}
 		else if (user) {
-			user.verifyPassword(req.body.password, function(err, isMatch) {
+			user.verifyPassword(password, function(err, isMatch) {
 				if (err) return next(err);
 
 				if (!isMatch) {
@@ -25,36 +33,9 @@ exports.login = function(req, res, next) {
 		        res.json({
 		          success: true,
 		          token: token,
-		          user: user.email
+		          user: user._id
 		        });
 			})
 		}
 	})
-}
-
-exports.validateUser = function(req, res, next) {
-
-	// check header or url parameters or post parameters for token
-	var token = req.body.token || req.query.token || req.headers['x-access-token'];
-
-	if (token) {
-	    jwt.verify(token, secret, function(err, decoded) {      
-	      if (err) {
-	        return res.json({ success: false, message: 'Failed to authenticate token.' });    
-	      } else {
-	        // if everything is good, save to request for use in other routes
-	        req.decoded = decoded;    
-	        next();
-	      }
-	    });
-	}
-	else {
-	    // if there is no token
-	    // return an error
-	    return res.status(403).send({ 
-	        success: false, 
-	        message: 'No token provided.' 
-	    });
-	}
-
 }

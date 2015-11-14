@@ -2,29 +2,30 @@
 var router = require('express').Router();
 
 // User controller/business logic
-var userController = require('./user');
+var userController = require('../controllers/user');
+
+// auth middleware for all secured endpoints
+var auth = require('../middlewares/validateRequest');
 
 // Login authentication
-var authController = require('../controllers/authenticate');
+var loginAuth = require('../controllers/authenticate');
 
 router.get('/', function(req,res) {
-	res.send("Hi")
-})
+	res.send("Welcome!");
+});
 
 router.route('/users')
-	.post(authController.login);
+	.post(loginAuth.login);
 
-// requiring token validation for every route except login
-//router.use(authController.validateUser);
 
 // Used for admins
 router.route('/users')
-	.get(userController.getAll)
+	.get(auth.validateUser, userController.getAll)
 
 router.route('/users/:user_id')
-	.get(userController.getOne)
-	.post(userController.create)
-	.put(userController.update)
-	.delete(userController.delete);
+	.get(auth.validateUser, userController.getOne)
+	.post(auth.validateUser, userController.create)
+	.put(auth.validateUser, userController.update)
+	.delete(auth.validateUser, userController.delete);
 
 module.exports = router;
