@@ -43,6 +43,7 @@ UserSchema.pre('save', function(callback) {
   });
 });
 
+// Comparing passwords on login
 UserSchema.methods.verifyPassword = function(password, cb) {
   bcrypt.compare(password, this.password, function(err, isMatch) {
     if (err) return cb(err);

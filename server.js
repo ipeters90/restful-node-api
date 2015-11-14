@@ -3,9 +3,7 @@ var app          = require('express')(),
 	cookieParser = require('cookie-parser'),
 	logger       = require('morgan'),
 	mongoose     = require('mongoose'),
-	jwt        	 = require('jsonwebtoken'),
 	config       = require('./config'),
-	User         = require('./models/user'),
 	routes       = require('./routes/index'),
 	port         = process.env.PORT || 9000;
 
@@ -23,7 +21,7 @@ app.use(bodyParser.json());
 //parsing cookies
 app.use(cookieParser());
 
-app.use('/', routes);
+app.all('/api/*', [require('./middlewares/validateRequest')]);
 
 // If no route is matched by now, it must be a 404
 app.use(function(req, res, next) {

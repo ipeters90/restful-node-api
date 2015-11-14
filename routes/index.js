@@ -4,28 +4,22 @@ var router = require('express').Router();
 // User controller/business logic
 var userController = require('../controllers/user');
 
-// auth middleware for all secured endpoints
-var auth = require('../middlewares/validateRequest');
-
 // Login authentication
-var loginAuth = require('../controllers/authenticate');
+var auth = require('../controllers/authenticate');
 
-router.get('/', function(req,res) {
-	res.send("Welcome!");
-});
-
-router.route('/users')
-	.post(loginAuth.login);
+router.route('/login')
+	.get(function(req, res) { return res.send("Login page")})
+	.post(auth.login);
 
 
 // Used for admins
-router.route('/users')
-	.get(auth.validateUser, userController.getAll)
+router.route('/api/users')
+	.get(userController.getAll);
 
-router.route('/users/:user_id')
-	.get(auth.validateUser, userController.getOne)
-	.post(auth.validateUser, userController.create)
-	.put(auth.validateUser, userController.update)
-	.delete(auth.validateUser, userController.delete);
+router.route('/api/users/:user_id')
+	.get(userController.getOne)
+	.post(userController.create)
+	.put(userController.update)
+	.delete(userController.delete);
 
 module.exports = router;
