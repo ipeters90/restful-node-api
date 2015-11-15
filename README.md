@@ -1,5 +1,14 @@
-# restful-user-auth-api
+# restful-node-api
 
-A restful user authentication api built with node.js/express and MongoDb. This api includes support for user info retrieval, updating, new user creation and also removal and a secure and reliable middleware to ensure appropriate authorization for each endpoint.
+A REST api built with Node.js using the Express.js framework and and MongoDB (using the Mongoose ODM). This api provides a secure interface for user info retrieval, updating, new user creation and removal.
 
-(This Api development build not yet completed and in progress)
+
++ Install all dependencies
+```sh
+$ npm install
+```
+
++ Run the app
+```sh
+$ npm start
+```
