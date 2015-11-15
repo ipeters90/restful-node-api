@@ -8,18 +8,18 @@ var userController = require('../controllers/user');
 var auth = require('../controllers/authenticate');
 
 router.route('/login')
-	.get(function(req, res) { return res.send("Login page")})
-	.post(auth.login);
+  .get(function(req, res) { return res.send("Login page")})
+  .post(auth.login);
 
 
 // Used for admins
 router.route('/api/users')
-	.get(userController.getAll);
+  .get(userController.getAll);
 
 router.route('/api/users/:user_id')
-	.get(userController.getOne)
-	.post(userController.create)
-	.put(userController.update)
-	.delete(userController.delete);
+  .get(userController.getOne)
+  .post(userController.create)
+  .put(userController.update)
+  .delete(userController.delete);
 
 module.exports = router;

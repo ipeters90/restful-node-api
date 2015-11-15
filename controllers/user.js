@@ -20,7 +20,7 @@ var users = {
       email: req.body.email,
       password: req.body.password,
       firstname: req.body.firstname,
-      lastname: req.body.lastname,
+      lastname: req.body.lastname
     });
     user.save(function(err) {
       if (err) throw err;
