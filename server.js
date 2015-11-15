@@ -22,6 +22,7 @@ app.use(bodyParser.json());
 app.use(cookieParser());
 
 app.all('/api/*', [require('./middlewares/validateRequest')]);
+app.use('/', routes);
 
 // If no route is matched by now, it must be a 404
 app.use(function(req, res, next) {
