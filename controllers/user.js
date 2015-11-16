@@ -1,4 +1,6 @@
 var User = require('../models/user');
+var jwt = require('jsonwebtoken');
+var secret = require('../config').secret;
 
 var users = {
  
@@ -9,28 +11,51 @@ var users = {
   },
  
   getOne: function(req, res) {
-    User.findById(req.params.id, function(err, user) {
+    User.findById(req.params.user_id, function(err, user) {
       if (err) throw err;
       res.json(user);
-    })
+    });
   },
  
   create: function(req, res) {
-    var user = new User({
-      email: req.body.email,
-      password: req.body.password,
-      firstname: req.body.firstname,
-      lastname: req.body.lastname
+    var email = req.body.email || '';
+    var password = req.body.password || '';
+
+    if (email == '' || password == '') {
+      return res.sendStatus(401);
+    };
+
+    User.findOne({ email: email }, function(err, user) {
+      if (err) res.send(err);
+      if (!user) {
+        var newUser = new User({
+          email: req.body.email,
+          password: req.body.password,
+          firstname: req.body.firstname,
+          lastname: req.body.lastname
+        });
+        newUser.save(function(err, user) {
+          if (err) throw err;
+
+          var token = jwt.sign(user, secret, {
+            expiresInMinutes: 1440 // expires in 24 hours
+          });
+
+          res.json({
+            success: true,
+            token: token,
+            user: user._id
+          });
+        });
+      }
+      else {
+        return res.json({ success: false, msg: "User already exists."});
+      }
     });
-    user.save(function(err) {
-      if (err) throw err;
-      console.log('User saved successfully');
-      res.json({ success: true });
-    })
   },
  
   update: function(req, res) {
-    User.findById(req.body.user_id, function(err,user) {
+    User.findById(req.params.user_id, function(err,user) {
       if (err)
         res.send(err);
       if (!user) {
@@ -38,8 +63,8 @@ var users = {
         return res.send({ error: 'Not found' });
       }
       user.email = req.body.email;
-      firstname: req.body.firstname;
-      lastname: req.body.lastname;
+      user.firstname = req.body.firstname;
+      user.lastname = req.body.lastname;
 
       user.save(function(err) {
         if (err) res.send(err);
@@ -49,15 +74,11 @@ var users = {
   },
  
   delete: function(req, res) {
-    User.findById(req.body.user_id, function(err,user) {
+    User.remove({ _id: req.params.user_id }, function(err, user) {
       if (err) res.send(err);
-      user.remove(function(err) {
-        if (err) {
-          res.statusCode = 500;
-          res.send('Internal error(%d): %s',res.statusCode,err.message);
-        }
-      })
-    })
+
+      res.json({ success: true });
+    });
   }
 };
  

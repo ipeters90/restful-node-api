@@ -1,4 +1,5 @@
 var jwt = require('jsonwebtoken');
+var secret = require('../config').secret;
 
 module.exports = function(req, res, next) {
 
@@ -11,7 +12,7 @@ module.exports = function(req, res, next) {
         return res.json({ success: false, message: 'Failed to authenticate token.' });    
       } else {
         // if everything is good, save to request for use in other routes
-        req.decoded = decoded;    
+        req.decoded = decoded;   
         next();
       }
     });

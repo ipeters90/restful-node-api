@@ -11,14 +11,15 @@ router.route('/login')
   .get(function(req, res) { return res.send("Login page")})
   .post(auth.login);
 
+router.route('/register')
+	.get(function(req, res) { return res.send("Register page")})
+	.post(userController.create);
 
-// Used for admins
 router.route('/api/users')
   .get(userController.getAll);
 
 router.route('/api/users/:user_id')
   .get(userController.getOne)
-  .post(userController.create)
   .put(userController.update)
   .delete(userController.delete);
 
