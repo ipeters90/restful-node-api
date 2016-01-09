@@ -11,7 +11,7 @@ Install all dependencies
 ```sh
 $ npm install
 ```
-
+## Start the app
 Start the backend server
 ```sh
 $ npm run start
@@ -22,17 +22,19 @@ Also start the Webpack development server to serve assets if needed
 $ npm run dev-server
 ```
 
+## Testing
 Run test to check endpoints
 ```sh
 $ npm run test
 ```
 
+## Build for production
 Compile your code for production
 ```sh
 $ npm run build
 ```
 
-Available API enpoints
+## Available API Endpoints
 ```sh
 GET /login
 POST /login
