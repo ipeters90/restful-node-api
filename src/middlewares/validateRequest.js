@@ -1,5 +1,5 @@
 var jwt = require('jsonwebtoken');
-var secret = require('../config').secret;
+var secret = require('../../config').secret;
 
 module.exports = function(req, res, next) {
 

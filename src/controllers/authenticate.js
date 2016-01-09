@@ -1,6 +1,6 @@
 var User   = require('../models/user');
 var jwt    = require('jsonwebtoken');
-var secret = require('../config').secret;
+var secret = require('../../config').secret;
 
 // logging in to the application
 exports.login = function(req, res, next) {

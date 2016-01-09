@@ -3,13 +3,16 @@ var webpack = require('webpack');
 
 module.exports = {
 	output: {
-
+		path: path.join(__dirname, 'build'),
+		publicPath: '/assets/',
+		filename: 'bundle.js'
 	},
 	module: {
 		loaders: [{
 			test: /\.js$/,
 			loaders:['babel-loader'],
-			exclude: /node_modules/
+			exclude: /node_modules/,
+			query: { presets: ['es2015']}
 		}]
 	},
 	plugins: [
