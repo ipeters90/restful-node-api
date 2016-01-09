@@ -7,27 +7,27 @@ A token-based REST api built with Node.js using the Express.js framework and and
 $ git clone https://github.com/ipeters90/restful-node-api.git
 ```
 
-+ Install all dependencies
+Install all dependencies
 ```sh
 $ npm install
 ```
 
-+ Start the backend server
+Start the backend server
 ```sh
 $ npm run start
 ```
 
-+ Also start the Webpack development server to serve assets if needed
+Also start the Webpack development server to serve assets if needed
 ```sh
 $ npm run dev-server
 ```
 
-+ Run test to check endpoints
+Run test to check endpoints
 ```sh
 $ npm run test
 ```
 
-+ Compile your code for production
+Compile your code for production
 ```sh
 $ npm run build
 ```
