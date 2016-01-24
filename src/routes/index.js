@@ -7,12 +7,15 @@ var userController = require('../controllers/user');
 // Login authentication
 var auth = require('../controllers/authenticate');
 
+router.route('/')
+	.get(function(req, res) { return res.send('Index page'); });
+
 router.route('/login')
-  .get(function(req, res) { return res.send("Login page")})
+  .get(function(req, res) { return res.send('Login page'); })
   .post(auth.login);
 
 router.route('/register')
-	.get(function(req, res) { return res.send("Register page")})
+	.get(function(req, res) { return res.send('Register page'); })
 	.post(userController.create);
 
 router.route('/api/users')

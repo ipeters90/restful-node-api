@@ -4,6 +4,7 @@
   "description": "",
   "main": "server/server.js",
   "scripts": {
+    "lint": "./node_modules/.bin/eslint .",
     "test": "./node_modules/mocha/bin/mocha --compilers js:babel-core/register --recursive",
     "dev-server": "node ./server/webpack-server.js",
     "build": "webpack --progress --profile --colors",
@@ -15,6 +16,8 @@
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "1.14.1",
     "cookie-parser": "1.4.0",
+    "cors": "^2.7.1",
+    "eslint": "^1.10.3",
     "express": "4.13.3",
     "jsonwebtoken": "5.4.0",
     "mongoose": "4.1.12",
